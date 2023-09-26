@@ -1,5 +1,5 @@
 using Energize.API.Services.PowerPlants.Implementations;
-using Energize.IntegrationTests.Helpers;
+using Energize.Tests.Common;
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
 
@@ -44,21 +44,7 @@ public class ProductionPlanCalculatorServiceTests
     {
         // Arrange
         var service = new ProductionPlanCalculatorService(_mockLogger.Object, _mockFactory.Object);
-
-        
-        var fuels = PayloadRequestFactory.CreateFuels(13.4, 50.8, 20, 60);
-        var powerPlants = new List<PowerPlant>
-        {
-            PayloadRequestFactory.CreatePowerPlant("gasfiredbig1", "gasfired", 0.53, 100, 460),
-            PayloadRequestFactory.CreatePowerPlant("gasfiredbig2", "gasfired", 0.53, 100, 460),
-            PayloadRequestFactory.CreatePowerPlant("gasfiredsomewhatsmaller", "gasfired", 0.37, 40, 210),
-            PayloadRequestFactory.CreatePowerPlant("tj1", "turbojet", 0.3, 0, 16),
-            PayloadRequestFactory.CreatePowerPlant("windpark1", "windturbine", 1, 0, 150),
-            PayloadRequestFactory.CreatePowerPlant("windpark2", "windturbine", 1, 0, 36),
-        };
-        
-        var payloadRequest = PayloadRequestFactory.CreatePayloadRequest(910, fuels, powerPlants);
-        
+        var payloadRequest = PayloadRequestFactory.CreatePayloadRequest3();
         var context = new Mock<ServerCallContext>().Object;
 
         // Setup the mocks

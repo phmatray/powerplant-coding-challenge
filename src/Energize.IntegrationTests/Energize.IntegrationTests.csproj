@@ -26,7 +26,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Energize.API\Energize.API.csproj" />
+      <ProjectReference Include="..\Energize.Tests.Common\Energize.Tests.Common.csproj" />
     </ItemGroup>
 
+
+    <ItemGroup>
+      <Folder Include="Helpers\" />
+    </ItemGroup>
 
 </Project>
