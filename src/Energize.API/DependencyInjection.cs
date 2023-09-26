@@ -5,23 +5,21 @@ namespace Energize.API;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+    public static void AddApplicationServices(this IServiceCollection services)
     {
         services.AddSingleton<IPowerPlantFactory, PowerPlantFactory>();
-        return services;
     }
 
-    public static IServiceCollection AddGrpcServices(this IServiceCollection services)
+    public static void AddGrpcServices(this IServiceCollection services)
     {
         services.AddGrpc().AddJsonTranscoding();
-        return services;
     }
 
-    public static IServiceCollection AddSwaggerServices(this IServiceCollection services)
+    public static void AddSwaggerServices(this IServiceCollection services)
     {
         services.AddGrpcSwagger();
         services.AddSwaggerGen(SetupSwaggerGen);
-        return services;
+        return;
 
         void SetupSwaggerGen(SwaggerGenOptions c)
         {

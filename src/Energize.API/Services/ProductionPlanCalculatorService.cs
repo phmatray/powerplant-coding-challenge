@@ -35,11 +35,10 @@ public class ProductionPlanCalculatorService : ProductionPlanCalculator.Producti
         return await Task.FromResult(reply);
     }
 
-    private List<ProductionPlanReply> CalculateProductionPlans(PayloadRequest request)
+    private IEnumerable<ProductionPlanReply> CalculateProductionPlans(PayloadRequest request)
     {
         var productionPlans = new List<ProductionPlanReply>();
-        
-        double remainingLoad = request.Load;
+        var remainingLoad = request.Load;
 
         // Preprocess PowerPlants to map them with their types.
         var powerPlants = request.Powerplants
@@ -78,12 +77,12 @@ public class ProductionPlanCalculatorService : ProductionPlanCalculator.Producti
         return productionPlans;
     }
 
-    private void ValidateRequest(PayloadRequest request)
+    private static void ValidateRequest(PayloadRequest request)
     {
         if (request == null)
             throw new ArgumentNullException(nameof(request));
     }
     
-    private double CalculateCostPerMwh(PowerPlant plant, IPowerPlant powerPlantType, Fuels fuels)
+    private static double CalculateCostPerMwh(PowerPlant plant, IPowerPlant powerPlantType, Fuels fuels)
         => powerPlantType.CalculateFuelCost(fuels, plant.Efficiency) + powerPlantType.CalculateCo2Cost(fuels);
 }
