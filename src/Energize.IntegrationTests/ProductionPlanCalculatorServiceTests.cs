@@ -15,20 +15,14 @@ public class ProductionPlanCalculatorServiceTests
     {
         // Arrange
         var service = new ProductionPlanCalculatorService(_mockLogger.Object, _mockFactory.Object);
-
-        var payloadRequest = new PayloadRequest(); // Set up your PayloadRequest
+        var payloadRequest = new PayloadRequest();
         var context = new Mock<ServerCallContext>().Object;
-            
-        // Set up any necessary mock behavior here
-        // For example: _mockFactory.Setup(...)
             
         // Act
         var result = await service.CalculateProductionPlan(payloadRequest, context);
             
         // Assert
-        // Validate the result here
         result.Should().NotBeNull();
-        // Additional assertions as needed based on your expected results
     }
         
     [Fact]
@@ -45,7 +39,6 @@ public class ProductionPlanCalculatorServiceTests
         act.Should().ThrowAsync<ArgumentNullException>().WithMessage("Value cannot be null. (Parameter 'request')");
     }
 
-    // Additional test cases, for example testing the calculation logic, error handling, etc.
     [Fact]
     public async Task CalculateProductionPlan_ShouldReturnExpectedResult_ForGivenInput()
     {

@@ -60,10 +60,8 @@ public class ProductionPlanCalculatorService : ProductionPlanCalculator.Producti
 
         foreach (var (powerplant, _) in sortedPowerPlants)
         {
-            if (remainingLoad <= 0) break;
-
             var production = 0.0;
-            if (powerplant.Pmin <= remainingLoad)
+            if (remainingLoad > 0 && powerplant.Pmin <= remainingLoad)
             {
                 var availableProduction = Math.Min(remainingLoad, powerplant.Pmax);
                 production = Math.Max(powerplant.Pmin, availableProduction);
