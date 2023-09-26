@@ -1,5 +1,5 @@
 using Energize.API;
-using Energize.API.Middlewares;
+using Energize.API.Middlewares.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -16,7 +16,7 @@ services.AddSwaggerServices();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.UseMiddleware<LoggingMiddleware>();
+app.UseLoggingMiddleware();
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>
