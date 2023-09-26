@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+option csharp_namespace = "Energize.API";
+import "google/api/annotations.proto";
+
+package productionplan;
+
+// The ProductionPlanCalculator service definition.
+service ProductionPlanCalculator {
+  // Calculates the production plan for the given load and powerplants.
+  rpc CalculateProductionPlan (PayloadRequest) returns (PayloadReply) {
+    option (google.api.http) = {
+      post: "/productionplan"
+      body: "*"
+    };
+  }
+}
+
+// Describing a single PowerPlant
+message PowerPlant {
+  // The name of the powerplant
+  string name = 1;
+  // The type of the powerplant
+  string type = 2; // e.g., gasfired, turbojet, windturbine
+  // The efficiency of the powerplant
+  double efficiency = 3;
+  // The minimum power the powerplant can produce
+  int32 pmin = 4;
+  // The maximum power the powerplant can produce
+  int32 pmax = 5;
+}
+
+// Describing Fuels, using clear naming, keeping original keys in comments
+message Fuels {
+  double gas = 1 [json_name="gas(euro/MWh)"];             // gas(euro/MWh)
+  double kerosine = 2 [json_name="kerosine(euro/MWh)"];   // kerosine(euro/MWh)
+  double co2 = 3 [json_name="co2(euro/ton)"];             // co2(euro/ton)
+  double wind = 4 [json_name="wind(%)"];                  // wind(%)
+}
+
+// The payload representing a request to the service
+message PayloadRequest {
+  double load = 1;
+  Fuels fuels = 2;
+  repeated PowerPlant powerplants = 3;
+}
+
+// Describing a single PowerPlantReply
+message ProductionPlanReply {
+  string name = 1;
+  double p = 2; // power produced by the plant
+}
+
+// The payload representing a reply from the service
+message PayloadReply {
+  repeated ProductionPlanReply powerplants = 1; // array of PowerPlantReply
+}
