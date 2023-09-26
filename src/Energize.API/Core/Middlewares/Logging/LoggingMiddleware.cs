@@ -1,6 +1,6 @@
 using Grpc.Core;
 
-namespace Energize.API.Middlewares.Logging;
+namespace Energize.API.Core.Middlewares.Logging;
 
 public class LoggingMiddleware
 {

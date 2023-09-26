@@ -1,9 +1,9 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Energize.API;
+namespace Energize.API.Core;
 
-public static class DependencyInjection
+internal static class DependencyInjection
 {
     public static void AddApplicationServices(this IServiceCollection services)
     {

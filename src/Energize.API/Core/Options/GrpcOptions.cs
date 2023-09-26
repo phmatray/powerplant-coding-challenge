@@ -1,4 +1,4 @@
-namespace Energize.API.Options;
+namespace Energize.API.Core.Options;
 
 public record GrpcOptions
 {
