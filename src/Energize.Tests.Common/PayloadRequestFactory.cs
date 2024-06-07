@@ -7,15 +7,15 @@ public class PayloadRequestFactory
     public static PayloadRequest CreatePayloadRequest3()
     {
         var fuels = CreateFuels(13.4, 50.8, 20, 60);
-        var powerPlants = new List<PowerPlant>
-        {
+        List<PowerPlant> powerPlants =
+        [
             CreatePowerPlant("gasfiredbig1", "gasfired", 0.53, 100, 460),
             CreatePowerPlant("gasfiredbig2", "gasfired", 0.53, 100, 460),
             CreatePowerPlant("gasfiredsomewhatsmaller", "gasfired", 0.37, 40, 210),
             CreatePowerPlant("tj1", "turbojet", 0.3, 0, 16),
             CreatePowerPlant("windpark1", "windturbine", 1, 0, 150),
-            CreatePowerPlant("windpark2", "windturbine", 1, 0, 36),
-        };
+            CreatePowerPlant("windpark2", "windturbine", 1, 0, 36)
+        ];
 
         return CreatePayloadRequest(910, fuels, powerPlants);
     }
