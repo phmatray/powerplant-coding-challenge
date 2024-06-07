@@ -33,7 +33,7 @@ public class ProductionPlanCalculatorServiceTests
         var context = new Mock<ServerCallContext>().Object;
             
         // Act
-        Func<Task> act = async () => await service.CalculateProductionPlan(null, context);
+        Func<Task> act = async () => await service.CalculateProductionPlan(null!, context);
             
         // Assert
         act.Should().ThrowAsync<ArgumentNullException>().WithMessage("Value cannot be null. (Parameter 'request')");
@@ -53,15 +53,15 @@ public class ProductionPlanCalculatorServiceTests
         _mockFactory.Setup(f => f.Create("windturbine")).Returns(new WindTurbinePlant());
 
         // Expected production plans
-        var expectedPlans = new List<ProductionPlanReply>
-        {
-            new() { Name = "windpark1", P = 90.0 },
-            new() { Name = "windpark2", P = 21.6 },
-            new() { Name = "gasfiredbig1", P = 460.0 },
-            new() { Name = "gasfiredbig2", P = 338.4 },
-            new() { Name = "gasfiredsomewhatsmaller", P = 0.0 },
-            new() { Name = "tj1", P = 0.0 }
-        };
+        List<ProductionPlanReply> expectedPlans =
+        [
+            new ProductionPlanReply { Name = "windpark1", P = 90.0 },
+            new ProductionPlanReply { Name = "windpark2", P = 21.6 },
+            new ProductionPlanReply { Name = "gasfiredbig1", P = 460.0 },
+            new ProductionPlanReply { Name = "gasfiredbig2", P = 338.4 },
+            new ProductionPlanReply { Name = "gasfiredsomewhatsmaller", P = 0.0 },
+            new ProductionPlanReply { Name = "tj1", P = 0.0 }
+        ];
 
         // Act
         var result = await service.CalculateProductionPlan(payloadRequest, context);

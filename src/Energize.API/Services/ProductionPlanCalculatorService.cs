@@ -2,19 +2,11 @@ using Grpc.Core;
 
 namespace Energize.API.Services;
 
-public class ProductionPlanCalculatorService : ProductionPlanCalculator.ProductionPlanCalculatorBase
+public class ProductionPlanCalculatorService(
+    ILogger<ProductionPlanCalculatorService> logger,
+    IPowerPlantFactory powerPlantFactory)
+    : ProductionPlanCalculator.ProductionPlanCalculatorBase
 {
-    private readonly ILogger<ProductionPlanCalculatorService> _logger;
-    private readonly IPowerPlantFactory _powerPlantFactory;
-    
-    public ProductionPlanCalculatorService(
-        ILogger<ProductionPlanCalculatorService> logger,
-        IPowerPlantFactory powerPlantFactory)
-    {
-        _logger = logger;
-        _powerPlantFactory = powerPlantFactory;
-    }
-
     /// <summary>
     /// Calculates the production plan based on the provided payload.
     /// </summary>
@@ -26,11 +18,11 @@ public class ProductionPlanCalculatorService : ProductionPlanCalculator.Producti
     public override async Task<PayloadReply> CalculateProductionPlan(PayloadRequest request, ServerCallContext context)
     {
         ValidateRequest(request);
-        _logger.LogInformation("Starting calculation for production plan with Load: {Load}", request.Load);
+        logger.LogInformation("Starting calculation for production plan with Load: {Load}", request.Load);
 
         var productionPlans = CalculateProductionPlans(request);
     
-        _logger.LogInformation("Completed calculation for production plan.");
+        logger.LogInformation("Completed calculation for production plan.");
         var reply = new PayloadReply { Powerplants = { productionPlans } };
         return await Task.FromResult(reply);
     }
@@ -42,7 +34,7 @@ public class ProductionPlanCalculatorService : ProductionPlanCalculator.Producti
 
         // Preprocess PowerPlants to map them with their types.
         var powerPlants = request.Powerplants
-            .ToDictionary(p => p, p => _powerPlantFactory.Create(p.Type));
+            .ToDictionary(p => p, p => powerPlantFactory.Create(p.Type));
 
         // Calculate production for wind turbines first as their fuel cost is zero
         foreach (var (powerplant, _) in powerPlants.Where(p => p.Key.Type == "windturbine"))

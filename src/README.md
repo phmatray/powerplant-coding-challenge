@@ -4,9 +4,11 @@
 
 Energize is a .NET-based service designed to optimize power plant energy output based on the provided load, fuel costs, and power plant specifications. It uses sophisticated algorithms to calculate the most cost-effective distribution of load amongst available power plants.
 
+Upgraded for .NET 8.0 in June 2024.
+
 ## Prerequisites
 
--   [.NET 7.0 SDK](https://dotnet.microsoft.com/download/dotnet/7.0)
+-   [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 
 ## Building and Launching the API
 
@@ -35,7 +37,7 @@ This will launch the API, and it will be accessible at  or the configured port i
 Run the following command in the folder Energize.E2E to install test dependencies:
 
 ```powershell
-pwsh bin/Debug/net7.0/playwright.ps1 install
+pwsh bin/Debug/net8.0/playwright.ps1 install
 ```
 
 ### Testing with CURL
